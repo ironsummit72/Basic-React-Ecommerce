@@ -15,7 +15,7 @@ function App() {
 
 const sortByName=(data)=>{
 const newarray=data.map((items)=>items)
-let sort=newarray.sort((a,b)=>{
+let sortedData=newarray.sort((a,b)=>{
   let fa=a.ProductName.toLowerCase()
   let fb=b.ProductName.toLowerCase()
   if(fa<fb)
@@ -28,12 +28,14 @@ let sort=newarray.sort((a,b)=>{
   }
   return 0
 })
-return sort;
+return sortedData;
 }
 
 
 const sortByPrice=(data)=>{
   const newarray= data.map((items)=>items)
+  let sortedData=newarray.sort((a,b)=> b.ProductPrice-a.ProductPrice)
+  return sortedData
 
 }
 
