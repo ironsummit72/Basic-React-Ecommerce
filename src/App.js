@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Card from "./components/Card";
 import Card2 from "./components/Card2";
-import Navbar from "./components/Navbar";
+
 import Filter from "./components/Filter";
 import axios from "axios"
 import "./style/filter.css";
@@ -36,6 +36,9 @@ const sortByPrice=(data)=>{
   const newarray= data.map((items)=>items)
   let sortedData=newarray.sort((a,b)=> b.ProductPrice-a.ProductPrice)
   return sortedData
+
+}
+const onHandleClick=()=>{
 
 }
 
@@ -75,17 +78,15 @@ useEffect(()=>{
       }
     }
 
-  // console.log(products[0].Paths[0].path); ${items.Paths[3].path}
+  
 
   return (
-    <>
-      <Navbar />
+    <> 
       <Filter onHandleChange={onFilterChange}/>
       {card.map((items,key)=>{
         try{
-
           let imageurl=BackendUrl+items.Paths[0].path
-          return <Card key={key} productname={items.ProductName} price={items.ProductPrice} imageurl={imageurl} onHandleClick={()=>{}}/>
+          return <Card key={key} productid={items._id} productname={items.ProductName} price={items.ProductPrice} imageurl={imageurl} inStock={true} onHandleClick={onHandleClick}/>
         }catch(error )
         {
         }
