@@ -27,7 +27,7 @@ const isLocal = false;
     <div className="imagecontainer border-black h-auto min-h-0 w-3/5 mt-20 ml-5 grid grid-cols-2 gap-3">     
      {
       images.map((items)=>{
-        return <img src={BackendUrl+items.path} alt="" className='productImage '/>
+        return <img key={items.filename} src={BackendUrl+items.path} alt="" className='productImage '/>
       })
      }
     </div>
