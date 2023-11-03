@@ -9,7 +9,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import Productview from "./components/Productview";
+import Productview from "./pages/Productview";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
