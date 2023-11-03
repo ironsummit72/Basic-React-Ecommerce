@@ -1,11 +1,12 @@
-function Card({price,productname,imageurl,onHandleClick})
+import {Link} from 'react-router-dom'
+function Card({price,productname,imageurl,onHandleClick,productid,inStock=true})
 {
 return <>
 <div className="flex font-sans  ml-20 mr-20 mt-10 mb-10 shadow-xl bg-gray-100 rounded-lg cursor-pointer " onClick={onHandleClick}>
   <div className="flex-none w-48 relative">
     <img src={imageurl} alt="" className="absolute inset-0 w-full h-full object-cover rounded-lg" loading="lazy" />
   </div>
-  <form className="flex-auto p-6">
+  <Link to={`/productview/${productid}`}   className="flex-auto p-6">
     <div className="flex flex-wrap">
       <h1 className="flex-auto text-lg font-semibold text-slate-900">
         {productname}
@@ -13,8 +14,8 @@ return <>
       <div className="text-lg font-semibold text-slate-500">
       ₹{price}
       </div>
-      <div className="w-full flex-none text-sm font-medium text-slate-700 mt-2">
-        In stock
+      <div className={`w-full flex-none text-sm font-medium  text-slate-700 mt-2 ${inStock?'text-green-600':'text-red-600'}`}>
+        {inStock?"In stock":"Out of Stock"}
       </div>
     </div>
     <div className="flex items-baseline mt-4 mb-6 pb-6 border-b border-slate-200">
@@ -67,9 +68,9 @@ return <>
       </button>
     </div>
     <p className="text-sm text-slate-700">
-      Free shipping on all continental US orders.
+      Free shipping across India. Shipping charges may vary country wise.
     </p>
-  </form>
+  </Link>
 </div>
 
 
