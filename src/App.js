@@ -82,7 +82,13 @@ useEffect(()=>{
       <Navbar />
       <Filter onHandleChange={onFilterChange}/>
       {card.map((items,key)=>{
-        return <Card key={key} productname={items.ProductName} price={items.ProductPrice} imageurl={`${BackendUrl}${items.Paths[0].path}`} onHandleClick={()=>{}}/>
+        try{
+
+          let imageurl=BackendUrl+items.Paths[0].path
+          return <Card key={key} productname={items.ProductName} price={items.ProductPrice} imageurl={imageurl} onHandleClick={()=>{}}/>
+        }catch(error )
+        {
+        }
       })}
     </>
   );
