@@ -1,29 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
-import Navbar from "./components/Navbar";
-import Cart from "./pages/Cart";
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-} from "react-router-dom";
-import Productview from "./pages/Productview";
+import Main from "./Main";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  // <React.StrictMode>
-  //   <App />
-  // </React.StrictMode>
-  <BrowserRouter>
-      <Navbar />
-    <Routes>
-      <Route path="/productview/:id" element={<Productview/>} />
-      <Route path="/cart" element={<Cart />} />
-      <Route path="/" element={<App />} />
-    </Routes>
-  </BrowserRouter>
+  <React.StrictMode>
+<Main/>
+ </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
