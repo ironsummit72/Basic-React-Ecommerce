@@ -46,4 +46,28 @@ function getLocalStorageDataLength(key)
         return 0
     }
 }
-export {createLocalStorage,insertDataLocalStorage,getLocalStorageData,getLocalStorageDataLength}
+function deleteLocalStorageItem(key,value)
+{
+let localStorageData=[]
+localStorageData=JSON.parse(localStorage.getItem(key));
+let indexOfValue=localStorageData.indexOf(value)
+if(indexOfValue>-1)
+{
+ localStorageData.splice(indexOfValue,1)
+ localStorage.setItem(key,JSON.stringify(localStorageData)); 
+ const event = new CustomEvent('localdatachanged');
+ document.dispatchEvent(event); 
+}
+}
+function checkIfExists(key,value)
+{
+    let localStorageData=JSON.parse(localStorage.getItem(key));
+    let indexof=localStorageData.indexOf(value)
+    if(indexof===-1)
+    {
+        return false
+    }else{
+        return true
+    }
+}
+export {createLocalStorage,insertDataLocalStorage,getLocalStorageData,getLocalStorageDataLength,deleteLocalStorageItem,checkIfExists}
