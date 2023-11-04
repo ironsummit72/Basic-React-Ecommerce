@@ -9,7 +9,6 @@ function Cart() {
     ? process.env.REACT_APP_LOCAL_URL
     : process.env.REACT_APP_BACKEND_URL;
   const [resposnseData, setResponseData] = useState([]);
-
   const localstorageData = JSON.stringify(getLocalStorageData("cartData"));
   const getDataFromDatabase = async () => {
     let response = await axios.get(
@@ -17,7 +16,6 @@ function Cart() {
     );
     setResponseData(response.data);
   };
-
   useEffect(() => {
     getDataFromDatabase();
   }, []);
@@ -27,6 +25,7 @@ function Cart() {
       {resposnseData.map((data) => {
         return (
           <Card
+            key={data._id}
             productname={data.ProductName}
             price={data.ProductPrice}
             productid={data._id}
