@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom'
+import addCommas from '../module/addComma'
 function Card({price,productname,imageurl,onHandleClick,productid,inStock=true})
 {
 return <>
@@ -12,7 +13,7 @@ return <>
         {productname}
       </h1>
       <div className="text-lg font-semibold text-slate-500">
-      ₹{price}
+      ₹{addCommas(price)}
       </div>
       <div className={`w-full flex-none text-sm font-medium  text-slate-700 mt-2 ${inStock?'text-green-600':'text-red-600'}`}>
         {inStock?"In stock":"Out of Stock"}
