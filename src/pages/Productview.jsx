@@ -3,6 +3,8 @@ import { useParams} from 'react-router-dom'
 import axios from 'axios';
 import { DefaultRating } from '../components/DefaultRating';
 import addCommas from '../module/addComma';
+import { insertDataLocalStorage } from '../module/LocalStorageApi';
+import Toast from '../components/Toast';
 
 function Productview() {
   const [response,setResponse]=useState([])
@@ -16,6 +18,27 @@ const isLocal = false;
     setResponse(response.data)
     setImages(response.data.Paths);
   }
+  const [toastIsVisable,setToastIsVisable]=useState(false);
+  const [toastMessage,setToastMessage]=useState('');
+  const showToast=(message,time=3000)=>{
+    setToastIsVisable(true)
+    setToastMessage(message)
+    setTimeout(()=>{
+      setToastIsVisable(false)
+    },time)
+  }
+
+  const addToCartBtn=()=>{
+  const isInsert=insertDataLocalStorage('cartData',id);
+  if(isInsert===0)
+  {
+    showToast('Item added to Cart',3000)
+  }
+  else if (isInsert===-1)
+  {
+    showToast("Item has already added to Cart",3000)
+  }
+  }
 
   useEffect(()=>{
     fetch(fetchUrl)
@@ -26,16 +49,18 @@ const isLocal = false;
     <div className="maincontainer flex">
     <div className="imagecontainer border-black h-auto min-h-0 w-3/5 mt-20 ml-5 grid grid-cols-2 gap-3">     
      {
-      images.map((items)=>{
-        return <img key={items.filename} src={BackendUrl+items.path} alt="" className='productImage '/>
-      })
-     }
+       images.map((items)=>{
+         return <img key={items.filename} src={BackendUrl+items.path} alt="" className='productImage '/>
+        })
+      }
     </div>
      <div className='productInfoContainer w-2/5 '>
       <h1 className='ProductName font-bold text-xl ml-10 mt-20'>{response.ProductName}</h1>
       <h1 className='ProductPrice font-medium text-xl ml-10 mt-8'>Rs. {addCommas(response.ProductPrice)}</h1>
       <DefaultRating rating={3} className='ml-10 mt-6'/>
-      <button className='bg-rose-950 w-4/5 h-14 ml-10 mt-20 text-white font-normal py-2 px-4 rounded-lg '>Add to Cart  :  Rs.{addCommas(response.ProductPrice)}</button>
+      
+      <button className='bg-rose-950 w-4/5 h-14 ml-10 mt-20 text-white font-normal py-2 px-4 rounded-lg ' onClick={addToCartBtn}>Add to Cart  :  Rs.{addCommas(response.ProductPrice)}</button>
+     
       <h1 className='font-bold ml-10 relative top-16 text-xl text-rose-950'>Offers</h1>
       <div className="offer w-4/5 text-rose-950 rounded-lg border-rounded border-dotted border-2 border-red-950 ml-10 mt-20 h-20 flex flex-col justify-around font-medium items-center">
         <h1 className='offer-text'>Flat Rs 250 Off | Use Code : FIRSTBUY </h1>
@@ -43,6 +68,7 @@ const isLocal = false;
       </div>
     </div>
     </div>
+      {toastIsVisable && <Toast message={toastMessage} onHandleClick={()=>{setToastIsVisable(false)}}/>}
     </>
   )
 }
