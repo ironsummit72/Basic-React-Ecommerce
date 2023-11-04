@@ -42,6 +42,8 @@ function getLocalStorageDataLength(key)
     if(localStorage.getItem(key)!==null){
         const localStorageData=JSON.parse(localStorage.getItem(key));
         return localStorageData.length;
+    }else{
+        return 0
     }
 }
 export {createLocalStorage,insertDataLocalStorage,getLocalStorageData,getLocalStorageDataLength}

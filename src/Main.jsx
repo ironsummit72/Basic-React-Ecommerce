@@ -8,7 +8,7 @@ import { Context } from './context/MyContext'
 import { getLocalStorageDataLength } from './module/LocalStorageApi'
 
 function Main() {
-const [cartCount,setCartCount]=useState(0);
+const [cartCount,setCartCount]=useState(getLocalStorageDataLength('cartData'));
 document.addEventListener('localdatachanged',()=>{
     setCartCount(getLocalStorageDataLength('cartData'))
 });
