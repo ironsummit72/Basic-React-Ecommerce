@@ -1,6 +1,9 @@
+import { useContext } from 'react'
 import {NavLink} from 'react-router-dom'
+import { Context } from '../context/MyContext'
 function Navbar()
 {
+  const {cartCount}=useContext(Context);
     return <>
     <nav className="bg-gray-900">
   <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -25,7 +28,9 @@ function Navbar()
           <div className="flex space-x-8">
             <NavLink to="/" className={({isActive})=>`${isActive?'bg-gray-500 text-white rounded-md px-3 py-2 text-sm font-medium':""} text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium`} aria-current="page">Products</NavLink>
             <NavLink to="/wishlist" className={({isActive})=>`${isActive?'bg-gray-500 text-white rounded-md px-3 py-2 text-sm font-medium':""} text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium`}>Wishlist</NavLink>
-            <NavLink to="cart" className={({isActive})=>`${isActive?'bg-gray-500 text-white rounded-md px-3 py-2 text-sm font-medium':""} text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium`}>Cart</NavLink>
+            <NavLink to="cart" className={({isActive})=>`${isActive?'bg-gray-500 text-white rounded-md px-3 py-2 text-sm font-medium':""} text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium flex justify-between items-center w-20`}>Cart
+            <p class="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-3 text-xs text-white">{cartCount}</p>
+            </NavLink>
             <NavLink to="/orders" className={({isActive})=>`${isActive?'bg-gray-500 text-white rounded-md px-3 py-2 text-sm font-medium':""} text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium`}>Your Orders</NavLink>
             <NavLink to="/more" className={({isActive})=>`${isActive?'bg-gray-500 text-white rounded-md px-3 py-2 text-sm font-medium':""} text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium`}>More</NavLink>
             <NavLink to="/about" className={({isActive})=>`${isActive?'bg-gray-500 text-white rounded-md px-3 py-2 text-sm font-medium':""} text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium`}>About Us</NavLink>
