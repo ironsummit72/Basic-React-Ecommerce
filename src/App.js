@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import Card from "./components/Card";
-import Card2 from "./components/Card2";
-
 import Filter from "./components/Filter";
 import axios from "axios"
 import "./style/filter.css";
+import { createLocalStorage } from "./module/LocalStorageApi";
 function App() {
   const [card, setCard] = useState([]);
   const [responseState, setResponse] = useState([]);
@@ -48,8 +47,6 @@ async function getData()
     const response=await axios.get(BackendUrl)
     setResponse(response.data)
     setCard(response.data)
-
-   
   }catch (error)
   {
     console.log(error);
@@ -57,9 +54,11 @@ async function getData()
 }
 useEffect(()=>{
   getData()
+  if(localStorage.getItem('cartData')===null)
+    {
+      createLocalStorage('cartData');
+    }
 },[])
-
-
 
     const onFilterChange=(e)=>{
       const value=e.target.value
@@ -77,9 +76,6 @@ useEffect(()=>{
         setCard(responseState)
       }
     }
-
-  
-
   return (
     <> 
       <Filter onHandleChange={onFilterChange}/>
