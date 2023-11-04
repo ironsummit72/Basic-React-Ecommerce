@@ -3,12 +3,14 @@ import { useParams} from 'react-router-dom'
 import axios from 'axios';
 import { DefaultRating } from '../components/DefaultRating';
 import addCommas from '../module/addComma';
-import { insertDataLocalStorage } from '../module/LocalStorageApi';
+import { insertDataLocalStorage,checkIfExists, deleteLocalStorageItem } from '../module/LocalStorageApi';
 import Toast from '../components/Toast';
 
 function Productview() {
   const [response,setResponse]=useState([])
   const [images,setImages]=useState([]);
+  const [cartExist,setCartExist]=useState(null);
+  const [cartBtnText,setCartBtnText]=useState('')
  let {id}=useParams();
 const isLocal = false;
   const BackendUrl = isLocal? process.env.REACT_APP_LOCAL_URL: process.env.REACT_APP_BACKEND_URL;
@@ -33,14 +35,23 @@ const isLocal = false;
   if(isInsert===0)
   {
     showToast('Item added to Cart',3000)
+    setCartBtnText('Remove from cart ')
   }
   else if (isInsert===-1)
   {
-    showToast("Item has already added to Cart",3000)
+    showToast("Item has Removed from Cart",3000)
+    deleteLocalStorageItem('cartData',id);
+    setCartBtnText('Add to Cart')
   }
   }
 
   useEffect(()=>{
+    if(checkIfExists('cartData',id))
+    {
+      setCartBtnText('Remove from cart ')
+    }else{ 
+      setCartBtnText('Add to Cart')
+    }
     fetch(fetchUrl)
   },[])
 
@@ -59,7 +70,7 @@ const isLocal = false;
       <h1 className='ProductPrice font-medium text-xl ml-10 mt-8'>Rs. {addCommas(response.ProductPrice)}</h1>
       <DefaultRating rating={3} className='ml-10 mt-6'/>
       
-      <button className='bg-rose-950 w-4/5 h-14 ml-10 mt-20 text-white font-normal py-2 px-4 rounded-lg ' onClick={addToCartBtn}>Add to Cart  :  Rs.{addCommas(response.ProductPrice)}</button>
+      <button className='bg-rose-950 w-4/5 h-14 ml-10 mt-20 text-white font-normal py-2 px-4 rounded-lg ' onClick={addToCartBtn}>{cartBtnText} "Rs." {addCommas(response.ProductPrice)}</button>
      
       <h1 className='font-bold ml-10 relative top-16 text-xl text-rose-950'>Offers</h1>
       <div className="offer w-4/5 text-rose-950 rounded-lg border-rounded border-dotted border-2 border-red-950 ml-10 mt-20 h-20 flex flex-col justify-around font-medium items-center">
