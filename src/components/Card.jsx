@@ -1,7 +1,36 @@
 import {Link} from 'react-router-dom'
 import addCommas from '../module/addComma'
+import { useEffect, useState } from 'react'
+import { checkIfExists, deleteLocalStorageItem, insertDataLocalStorage } from '../module/LocalStorageApi';
+import Toast from './Toast';
 function Card({price,productname,imageurl,onHandleClick,productid,inStock=true})
 {
+  const [btnText,setBtnText]=useState('');
+  const onHandleClickCart=(e)=>{
+    e.preventDefault();
+    const isItemExist=checkIfExists('cartData',productid);
+    if(isItemExist)
+    {
+      deleteLocalStorageItem('cartData',productid)
+      setBtnText('Add to Cart')
+      
+    }else{
+      insertDataLocalStorage('cartData',productid);
+      setBtnText('Remove from Cart')
+    }
+  }
+  //const [isProductExist,setProductExist
+  useEffect(()=>{
+  const isItemExist=checkIfExists('cartData',productid);
+  if(isItemExist)
+  {
+    setBtnText('Remove from Cart')
+  }
+  else{
+    setBtnText('Add to Cart')
+  }
+  },[])
+
 return <>
 <div className="flex font-sans  ml-20 mr-20 mt-10 mb-10 shadow-xl bg-gray-100 rounded-lg cursor-pointer " onClick={onHandleClick}>
   <div className="flex-none w-48 relative">
@@ -58,8 +87,8 @@ return <>
         <button className="h-10 px-6 font-semibold rounded-md bg-black text-white" type="submit">
           Buy now
         </button>
-        <button className="h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900" type="button">
-          Add to bag
+        <button className="h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900" type="button" onClick={onHandleClickCart}>
+        {btnText}
         </button>
       </div>
       <button className="flex-none flex items-center justify-center w-9 h-9 rounded-md text-slate-300 border border-slate-200" type="button" aria-label="Like">
