@@ -32,7 +32,7 @@ function Card({price,productname,imageurl,onHandleClick,productid,inStock=true})
   },[])
 
 return <>
-<div className="flex font-sans  ml-20 mr-20 mt-10 mb-10 shadow-xl bg-gray-100 rounded-lg cursor-pointer " onClick={onHandleClick}>
+<div className="flex font-sans  ml-20 mr-20 mt-10 mb-10 shadow-xl bg-gray-100 rounded-lg cursor-pointer  " onClick={onHandleClick}>
   <div className="flex-none w-48 relative">
     <img src={imageurl} alt="" className="absolute inset-0 w-full h-full object-cover rounded-lg" loading="lazy" />
   </div>
