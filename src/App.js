@@ -54,10 +54,7 @@ async function getData()
 }
 useEffect(()=>{
   getData()
-  if(localStorage.getItem('cartData')===null)
-    {
       createLocalStorage('cartData');
-    }
 },[])
 
     const onFilterChange=(e)=>{
