@@ -1,53 +1,47 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { getLocalStorageData, getLocalStorageDataLength } from "../module/LocalStorageApi";
-import Card from "../components/Card";
+import { getCartLength, getItemQuantity, getLocalStorageData, getLocalStorageDataLength } from "../module/LocalStorageApi";
 import Checkout from "../components/Checkout";
+import CartItems from "../components/CartItems";
 
 function Cart() {
   const isLocal = false;
   const BackendUrl = isLocal
     ? process.env.REACT_APP_LOCAL_URL
     : process.env.REACT_APP_BACKEND_URL;
-  const [resposnseData, setResponseData] = useState([]);
-  const localstorageData = JSON.stringify(getLocalStorageData("cartData"));
-  let cartItemPrices=[]
-  let cartTotal=0;
-  let freeShipping=false;
-  let shippingCharges=undefined;
-  const getDataFromDatabase = async () => {
-    let response = await axios.get(
-      `${BackendUrl + "cartData?cartitems=" + localstorageData}`
-    );
-    setResponseData(response.data);
-  };
-  useEffect(() => {
-    getDataFromDatabase();
-  }, []);
-resposnseData.forEach((items)=>{
-  cartItemPrices.push(parseInt(items.ProductPrice));
-  cartTotal= cartItemPrices.reduce((a, b) => a + b, 0);
-})
-shippingCharge()
+    const [resposnseData, setResponseData] = useState([]);
+    const localstorageData = (getLocalStorageData("cartData"));
+    let shippingCharge=undefined;
+    let isShippingFree=false
+     const idItems=localstorageData.map((items)=>items.id);
+     const cartIDData=JSON.stringify(idItems);
+     const getDatafromDatabase = async()=>{
+      let response=await axios.get(`${BackendUrl+"cartData?cartitems="+cartIDData}`);
+      setResponseData(response.data);
+     }
+     useEffect(()=>{
+      getDatafromDatabase();
+     },[])
+   const QuantitiesPrice=resposnseData.map((items)=>getItemQuantity('cartData',items._id)*items.ProductPrice);
+  
+    let cartTotal=QuantitiesPrice.reduce((a, b) => a + b, 0);
+    
+  if(getCartLength('cartData')>3||cartTotal>15000)
+  {
+    shippingCharge=0
+    isShippingFree=true
 
-function shippingCharge()
-{
-  if(getLocalStorageDataLength('cartData')>2||cartTotal>10000)
-  {   freeShipping=true
-     shippingCharges=0;
   }else{
-    freeShipping=false
-    shippingCharges=Math.round((4/100)*cartTotal)
+    shippingCharge= Math.round((4/100)*cartTotal);
+    isShippingFree=false
   }
-}
-
 
   return (
     <>
 
       {resposnseData.map((data) => {
         return (
-          <Card
+          <CartItems
           key={data._id}
           productname={data.ProductName}
           price={data.ProductPrice}
@@ -57,10 +51,12 @@ function shippingCharge()
           );
         })}
     
-      {getLocalStorageDataLength('cartData')!==0&&<Checkout Total={cartTotal} shipping={shippingCharges} isFreeShipping={freeShipping}/>}
+      {getLocalStorageDataLength('cartData')!==0&&<Checkout totalCartItems={getCartLength('cartData')} Total={cartTotal} Shipping={shippingCharge} isFreeShipping={isShippingFree}/>}
      
     </>
   );
 }
+<>
+</>
 
 export default Cart;
