@@ -2,7 +2,6 @@ import {Link} from 'react-router-dom'
 import addCommas from '../module/addComma'
 import { useEffect, useState } from 'react'
 import { checkIfExists, deleteLocalStorageItem, insertDataLocalStorage } from '../module/LocalStorageApi';
-import Toast from './Toast';
 function Card({price,productname,imageurl,onHandleClick,productid,inStock=true})
 {
   const [btnText,setBtnText]=useState('');
@@ -15,7 +14,7 @@ function Card({price,productname,imageurl,onHandleClick,productid,inStock=true})
       setBtnText('Add to Cart')
       
     }else{
-      insertDataLocalStorage('cartData',productid);
+      insertDataLocalStorage('cartData',{id:productid,quantity:1});
       setBtnText('Remove from Cart')
     }
   }
