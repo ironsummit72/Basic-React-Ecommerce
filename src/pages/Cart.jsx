@@ -19,10 +19,11 @@ function Cart() {
       let response=await axios.get(`${BackendUrl+"cartData?cartitems="+cartIDData}`);
       setResponseData(response.data);
      }
+     const cartLength=getCartLength('cartData')
      useEffect(()=>{
-      getDatafromDatabase();
-     },[])
-   const QuantitiesPrice=resposnseData.map((items)=>getItemQuantity('cartData',items._id)*items.ProductPrice);
+     getDatafromDatabase();
+     },[cartLength])
+   const QuantitiesPrice=resposnseData.map((items)=>getItemQuantity('cartData',items._id)===undefined?0:getItemQuantity('cartData',items._id)*items.ProductPrice);
   
     let cartTotal=QuantitiesPrice.reduce((a, b) => a + b, 0);
     
@@ -36,12 +37,13 @@ function Cart() {
     isShippingFree=false
   }
 
+
   return (
     <>
 
       {resposnseData.map((data) => {
         return (
-          <CartItems
+         <CartItems
           key={data._id}
           productname={data.ProductName}
           price={data.ProductPrice}
