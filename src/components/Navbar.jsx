@@ -1,11 +1,18 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import {NavLink} from 'react-router-dom'
-import { Context } from '../context/MyContext'
+import { Context,SearchContext } from '../context/MyContext'
+import SearchBar from './SearchBar';
+
+
 function Navbar()
 {
-  const {cartCount}=useContext(Context);
+  const { cartCount } = useContext(Context);
+  const { query, setQuery } = useContext(SearchContext);
+  const onchangeHandler = (e) => {
+    setQuery(e.target.value);
+  };
     return <>
-    <nav className="bg-gray-900">
+    <nav className="bg-gray-900 h-24">
   <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
     <div className="relative flex h-16 items-center justify-between">
       <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -24,16 +31,17 @@ function Navbar()
         <div className="flex flex-shrink-0 items-center">
           <img className="h-8 w-auto" src="" alt="Your Company"/>
         </div>
-        <div className="hidden sm:ml-48 sm:block">
-          <div className="flex space-x-8">
-            <NavLink to="/" className={({isActive})=>`${isActive?'bg-gray-500 text-white rounded-md px-3 py-2 text-sm font-medium':""} text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium`} aria-current="page">Products</NavLink>
-            <NavLink to="/wishlist" className={({isActive})=>`${isActive?'bg-gray-500 text-white rounded-md px-3 py-2 text-sm font-medium':""} text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium`}>Wishlist</NavLink>
-            <NavLink to="cart" className={({isActive})=>`${isActive?'bg-gray-500 text-white rounded-md px-3 py-2 text-sm font-medium':""} text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium flex justify-between items-center w-20`}>Cart
+        <div className="hidden sm:ml-48 sm:block mt-4">
+          <div className="flex space-x-8 space-y-8 ">
+            <SearchBar onHandleChange={onchangeHandler} value={query}/>
+            <NavLink to="/" className={({isActive})=>`${isActive?'bg-gray-500 h-min text-white rounded-md px-3 py-2 text-sm font-medium':""} h-min text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium`} aria-current="page">Products</NavLink>
+            <NavLink to="/wishlist" className={({isActive})=>`${isActive?'bg-gray-500 text-white rounded-md px-3 py-2 text-sm font-medium':""} h-min text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium`}>Wishlist</NavLink>
+            <NavLink to="cart" className={({isActive})=>`${isActive?'bg-gray-500 text-white rounded-md px-3 py-2 text-sm font-medium':""} h-min text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium flex justify-between items-center w-20`}>Cart
             <p className="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-3 text-xs text-white">{cartCount}</p>
             </NavLink>
-            <NavLink to="/orders" className={({isActive})=>`${isActive?'bg-gray-500 text-white rounded-md px-3 py-2 text-sm font-medium':""} text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium`}>Your Orders</NavLink>
-            <NavLink to="/more" className={({isActive})=>`${isActive?'bg-gray-500 text-white rounded-md px-3 py-2 text-sm font-medium':""} text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium`}>More</NavLink>
-            <NavLink to="/about" className={({isActive})=>`${isActive?'bg-gray-500 text-white rounded-md px-3 py-2 text-sm font-medium':""} text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium`}>About Us</NavLink>
+            <NavLink to="/orders" className={({isActive})=>`${isActive?'h-min bg-gray-500 text-white rounded-md px-3 py-2 text-sm font-medium':""} h-min text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium`}>Orders</NavLink>
+            <NavLink to="/more" className={({isActive})=>`${isActive?'h-min bg-gray-500 text-white rounded-md px-3 py-2 text-sm font-medium':""}  h-min text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium`}>More</NavLink>
+            <NavLink to="/about" className={({isActive})=>`${isActive?'h-min bg-gray-500 text-white rounded-md px-3 py-2 text-sm font-medium':""} h-min text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium`}>About</NavLink>
           </div>
         </div>
       </div>
