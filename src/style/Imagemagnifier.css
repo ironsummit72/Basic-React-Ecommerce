@@ -1,0 +1,16 @@
+.image-magnifier-container{
+    position: relative;
+
+}
+.magnifier-img{
+   width: auto;
+
+
+}
+.magnifier-image{
+    width: 150px;
+    height: 150px;
+    transform: scale(2.0);
+    border-radius: 50%;
+    border: 2px solid white;
+}
