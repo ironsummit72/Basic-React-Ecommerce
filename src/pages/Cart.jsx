@@ -5,10 +5,7 @@ import Checkout from "../components/Checkout";
 import CartItems from "../components/CartItems";
 
 function Cart() {
-  const isLocal = false;
-  const BackendUrl = isLocal
-    ? process.env.REACT_APP_LOCAL_URL
-    : process.env.REACT_APP_BACKEND_URL;
+  const BackendUrl =process.env.REACT_APP_BACKEND_URL;
     const [resposnseData, setResponseData] = useState([]);
     const localstorageData = (getLocalStorageData("cartData"));
     let shippingCharge=undefined;

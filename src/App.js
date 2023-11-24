@@ -11,10 +11,8 @@ function App() {
   const [card, setCard] = useState([]);
   const {query}=useContext(SearchContext);
   const [responseState, setResponse] = useState([]);
-  const isLocal = false;
-  const BackendUrl = isLocal
-  ? process.env.REACT_APP_LOCAL_URL
-  : process.env.REACT_APP_BACKEND_URL;
+  
+  const BackendUrl = process.env.REACT_APP_BACKEND_URL;
   
   const sortByName=(data)=>{
     const newarray=data.map((items)=>items)

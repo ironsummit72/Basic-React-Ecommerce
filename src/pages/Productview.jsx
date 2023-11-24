@@ -19,8 +19,7 @@ function Productview() {
   const [quantity,setQuantity]=useState(getItemQuantity('cartData',id)!==undefined ? getItemQuantity('cartData',id):1);
 
   let cartQuantity=quantity
-const isLocal = false;
-  const BackendUrl = isLocal? process.env.REACT_APP_LOCAL_URL: process.env.REACT_APP_BACKEND_URL;
+  const BackendUrl = process.env.REACT_APP_BACKEND_URL;
   const fetchUrl=BackendUrl+`productview?id=${id}`
   const fetch=async (url)=>{
     let response=await axios.get(url);
