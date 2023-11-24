@@ -31,7 +31,6 @@ function ImageView({indexImg,imgarray,onClose,BackendUrl}) {
 
         return (
             <div className="w-full h-full flex flex-col items-center mt-8">
-                {/* <img src={BackendUrl+imgarray[index].path} className="w-2/4 object-cover"  alt="" /> */}
                 <ImageMagnifier imageurl={BackendUrl+imgarray[index].path}  />
                 <div className="flex justify-between w-96 sticky bottom-4">
                <button className={`${isPrevious?"":"hidden"} w-20 h-20 border-2 bg-white rounded-full flex justify-center items-center`} onClick={onPrevious}><GrFormPrevious size={30} /></button>
