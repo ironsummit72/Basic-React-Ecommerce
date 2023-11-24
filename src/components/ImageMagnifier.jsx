@@ -8,12 +8,13 @@ function ImageMagnifier({imageurl}) {
     const handleMouseMove=(e)=>{
       const {left,top,width,height}=e.currentTarget.getBoundingClientRect();
     //?  calculating the position (x,y) as percentage based on cursor location
+    const scrollPosition=window.scrollY;
     const x=((e.pageX-left)/width)*100
-    const y=((e.pageY-top)/height)*100
+    const y=((e.pageY-top-scrollPosition)/height)*100
     setPosition({x,y})
     
     // update cursor position to store the current mouse cursor cordinates relative to the image
-    setCursorPosition({x:e.pageX-left,y:e.pageY-top})
+    setCursorPosition({x:e.pageX-left,y:e.pageY-top-scrollPosition})
 
 
     }
