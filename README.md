@@ -52,4 +52,9 @@ npm start
 cd frontend
 npm run build
 ```
+## How to list products 
+open the backendurl/uploads in your browser you will see a upload product page. where you can upload your products 
+
+!["example img"](./readme/example.png) 
+
 **note this project is a demo project not for production use this is a basic ecommerce demo app. will make an advance full fledged ecommerce application.**
