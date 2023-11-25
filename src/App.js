@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import Card from "./components/Card";
 import Filter from "./components/Filter";
 import axios from "axios"
 import "./style/filter.css";
 import { createLocalStorage } from "./module/LocalStorageApi";
 import { SearchContext } from "./context/MyContext";
+import Card3 from "./components/Card3";
 
 
 function App() {
@@ -91,14 +91,16 @@ if(responseState.length!==0)
   return (
     <> 
       <Filter onHandleChange={onFilterChange}/>
+      <div className="grid grid-cols-3 gap-4 ">
       {card.map((items,key)=>{
         try{
           let imageurl=BackendUrl+items.Paths[0].path
-          return <Card key={key} productid={items._id} productname={items.ProductName} price={items.ProductPrice} imageurl={imageurl} inStock={true} onHandleClick={onHandleClick}/>
+          return <Card3 key={key} productid={items._id} productname={items.ProductName} price={items.ProductPrice} imageurl={imageurl} inStock={true} onHandleClick={onHandleClick}/>
         }catch(error )
         {
         }
       })}
+      </div>
     </>
   );
 }
